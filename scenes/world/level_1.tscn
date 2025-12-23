@@ -1,0 +1,32 @@
+[gd_scene load_steps=6 format=3 uid="uid://level1_uid"]
+
+[ext_resource type="PackedScene" uid="uid://player_uid_placeholder" path="res://scenes/characters/player.tscn" id="1_player"]
+[ext_resource type="PackedScene" uid="uid://enemy_uid_placeholder" path="res://scenes/characters/enemy.tscn" id="2_enemy"]
+[ext_resource type="PackedScene" uid="uid://axe_uid" path="res://scenes/objects/axe.tscn" id="3_axe"]
+[ext_resource type="PackedScene" uid="uid://bush_uid" path="res://scenes/objects/breakable_bush.tscn" id="4_bush"]
+
+[sub_resource type="NavigationPolygon" id="NavigationPolygon_1"]
+vertices = PackedVector2Array(1000, 1000, -1000, 1000, -1000, -1000, 1000, -1000)
+polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-1000, -1000, 1000, -1000, 1000, 1000, -1000, 1000)])
+
+[node name="Level1" type="Node2D"]
+
+[node name="NavigationRegion2D" type="NavigationRegion2D" parent="."]
+navigation_polygon = SubResource("NavigationPolygon_1")
+
+[node name="Player" parent="." instance=ExtResource("1_player")]
+position = Vector2(0, 0)
+
+[node name="Enemy" parent="." instance=ExtResource("2_enemy")]
+position = Vector2(200, 0)
+
+[node name="Axe" parent="." instance=ExtResource("3_axe")]
+position = Vector2(-100, 0)
+
+[node name="BreakableBush" parent="." instance=ExtResource("4_bush")]
+position = Vector2(50, 0)
+
+[node name="Walls" type="Node2D" parent="."]
+# Place your StaticBody2D walls here to build the maze. 
+# Remember to rebake the NavigationRegion2D after placing walls.
