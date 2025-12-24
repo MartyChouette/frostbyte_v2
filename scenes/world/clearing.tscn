@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3 uid="uid://clearing_uid"]
+
+[ext_resource type="Script" path="res://scripts/clearing.gd" id="1_clearing"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_clearing"]
+size = Vector2(300, 300)
+
+[node name="Clearing" type="Node2D"]
+script = ExtResource("1_clearing")
+
+[node name="SafeZoneArea" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SafeZoneArea"]
+shape = SubResource("RectangleShape2D_clearing")
+debug_color = Color(0.2, 0.8, 0.2, 0.1)
+
+[node name="ItemSpawnPoints" type="Node2D" parent="."]
+
+[node name="SpawnPoint1" type="Marker2D" parent="ItemSpawnPoints"]
+position = Vector2(-50, -50)
+
+[node name="SpawnPoint2" type="Marker2D" parent="ItemSpawnPoints"]
+position = Vector2(50, 50)

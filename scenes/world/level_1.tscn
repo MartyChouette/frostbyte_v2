@@ -1,14 +1,15 @@
-[gd_scene load_steps=6 format=3 uid="uid://level1_uid"]
+[gd_scene load_steps=7 format=3 uid="uid://level1_uid"]
 
 [ext_resource type="PackedScene" uid="uid://player_uid_placeholder" path="res://scenes/characters/player.tscn" id="1_player"]
 [ext_resource type="PackedScene" uid="uid://enemy_uid_placeholder" path="res://scenes/characters/enemy.tscn" id="2_enemy"]
 [ext_resource type="PackedScene" uid="uid://axe_uid" path="res://scenes/objects/axe.tscn" id="3_axe"]
 [ext_resource type="PackedScene" uid="uid://bush_uid" path="res://scenes/objects/breakable_bush.tscn" id="4_bush"]
+[ext_resource type="PackedScene" uid="uid://clearing_uid" path="res://scenes/world/clearing.tscn" id="5_clearing"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_1"]
-vertices = PackedVector2Array(1000, 1000, -1000, 1000, -1000, -1000, 1000, -1000)
+vertices = PackedVector2Array(2000, 2000, -2000, 2000, -2000, -2000, 2000, -2000)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3)])
-outlines = Array[PackedVector2Array]([PackedVector2Array(-1000, -1000, 1000, -1000, 1000, 1000, -1000, 1000)])
+outlines = Array[PackedVector2Array]([PackedVector2Array(-2000, -2000, 2000, -2000, 2000, 2000, -2000, 2000)])
 
 [node name="Level1" type="Node2D"]
 
@@ -21,12 +22,21 @@ position = Vector2(0, 0)
 [node name="Enemy" parent="." instance=ExtResource("2_enemy")]
 position = Vector2(200, 0)
 
-[node name="Axe" parent="." instance=ExtResource("3_axe")]
-position = Vector2(-100, 0)
+[node name="MazeSection1" type="Node2D" parent="."]
+# This will be the first maze chunk
+
+[node name="Walls" type="Node2D" parent="MazeSection1"]
+# Add maze walls here
+
+[node name="Clearing1" parent="." instance=ExtResource("5_clearing")]
+position = Vector2(500, 0)
+items_to_spawn = [ExtResource("3_axe")]
+
+[node name="MazeSection2" type="Node2D" parent="."]
+position = Vector2(1000, 0)
+
+[node name="Walls" type="Node2D" parent="MazeSection2"]
+# Add maze walls here
 
 [node name="BreakableBush" parent="." instance=ExtResource("4_bush")]
-position = Vector2(50, 0)
-
-[node name="Walls" type="Node2D" parent="."]
-# Place your StaticBody2D walls here to build the maze. 
-# Remember to rebake the NavigationRegion2D after placing walls.
+position = Vector2(800, 0)
