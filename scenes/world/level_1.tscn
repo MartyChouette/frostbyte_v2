@@ -1,10 +1,12 @@
-[gd_scene load_steps=7 format=3 uid="uid://level1_uid"]
+[gd_scene load_steps=9 format=3 uid="uid://level1_uid"]
 
 [ext_resource type="PackedScene" uid="uid://player_uid_placeholder" path="res://scenes/characters/player.tscn" id="1_player"]
 [ext_resource type="PackedScene" uid="uid://enemy_uid_placeholder" path="res://scenes/characters/enemy.tscn" id="2_enemy"]
 [ext_resource type="PackedScene" uid="uid://axe_uid" path="res://scenes/objects/axe.tscn" id="3_axe"]
 [ext_resource type="PackedScene" uid="uid://bush_uid" path="res://scenes/objects/breakable_bush.tscn" id="4_bush"]
 [ext_resource type="PackedScene" uid="uid://clearing_uid" path="res://scenes/world/clearing.tscn" id="5_clearing"]
+[ext_resource type="PackedScene" uid="uid://hedge_segment_uid" path="res://scenes/objects/hedge_segment.tscn" id="6_hedge_segment"]
+[ext_resource type="Script" path="res://scripts/maze_generator.gd" id="7_maze_generator"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_1"]
 vertices = PackedVector2Array(2000, 2000, -2000, 2000, -2000, -2000, 2000, -2000)
@@ -19,24 +21,15 @@ navigation_polygon = SubResource("NavigationPolygon_1")
 [node name="Player" parent="." instance=ExtResource("1_player")]
 position = Vector2(0, 0)
 
-[node name="Enemy" parent="." instance=ExtResource("2_enemy")]
-position = Vector2(200, 0)
-
-[node name="MazeSection1" type="Node2D" parent="."]
-# This will be the first maze chunk
-
-[node name="Walls" type="Node2D" parent="MazeSection1"]
-# Add maze walls here
-
-[node name="Clearing1" parent="." instance=ExtResource("5_clearing")]
-position = Vector2(500, 0)
-items_to_spawn = [ExtResource("3_axe")]
-
-[node name="MazeSection2" type="Node2D" parent="."]
-position = Vector2(1000, 0)
-
-[node name="Walls" type="Node2D" parent="MazeSection2"]
-# Add maze walls here
-
-[node name="BreakableBush" parent="." instance=ExtResource("4_bush")]
-position = Vector2(800, 0)
+[node name="HedgeMaze" type="Node2D" parent="."]
+script = ExtResource("7_maze_generator")
+width = 6
+height = 6
+cell_size = 300.0
+hedge_scene = ExtResource("6_hedge_segment")
+breakable_hedge_scene = ExtResource("4_bush")
+clearing_scene = ExtResource("5_clearing")
+items_for_clearings = [ExtResource("3_axe")]
+loose_item_scenes = [ExtResource("3_axe")]
+character_scenes = [ExtResource("2_enemy")]
+character_count = 3
